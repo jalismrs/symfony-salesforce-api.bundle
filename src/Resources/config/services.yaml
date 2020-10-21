@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        public: false
+    
+    salesforce_api.salesforce_api:
+        class: 'Jalismrs\SalesforceApiBundle\SalesforceApi'
+        arguments:
+            $apiThrottler: '@Jalismrs\ApiThrottlerBundle\ApiThrottler'
+            $sforceEnterpriseClient: '@SforceEnterpriseClient'
+    
+    Jalismrs\SalesforceApiBundle\SalesforceApi: '@salesforce_api.salesforce_api'
+    
+    # developerforce/force.com-toolkit-for-php
+    SforceEnterpriseClient:
+        class: 'SforceEnterpriseClient'
