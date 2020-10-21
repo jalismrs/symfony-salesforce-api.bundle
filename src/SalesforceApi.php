@@ -54,22 +54,21 @@ class SalesforceApi
         $this->apiThrottler = $apiThrottler;
         $this->client       = $sforceEnterpriseClient;
         
-        dd(
-            $this->client
+        $username = $parameterBag->get(self::PARAMETER_USERNAME);
+        $password = vsprintf(
+            '%s%s',
+            [
+                $parameterBag->get(self::PARAMETER_PASSWORD),
+                $parameterBag->get(self::PARAMETER_TOKEN),
+            ]
         );
         
         $this->client->createConnection(
             __DIR__ . '/../salesforce.wsdl.xml'
         );
         $this->client->login(
-            $parameterBag->get(self::PARAMETER_USERNAME),
-            vsprintf(
-                '%s%s',
-                [
-                    $parameterBag->get(self::PARAMETER_PASSWORD),
-                    $parameterBag->get(self::PARAMETER_TOKEN),
-                ]
-            )
+            $username,
+            $password
         );
         
         $this->apiThrottler->registerRateLimits(
@@ -81,25 +80,6 @@ class SalesforceApi
                 ),
             ]
         );
-    }
-    
-    /**
-     * queryOne
-     *
-     * @param string $query
-     *
-     * @return \SObject|null
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
-     */
-    public function queryOne(
-        string $query
-    ) : ?SObject {
-        $queryResult = $this->query($query);
-    
-        return $queryResult->size === 0
-            ? null
-            : $queryResult->current();
     }
     
     /**
@@ -123,6 +103,25 @@ class SalesforceApi
         }
         
         return $result;
+    }
+    
+    /**
+     * queryOne
+     *
+     * @param string $query
+     *
+     * @return \SObject|null
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
+     */
+    public function queryOne(
+        string $query
+    ) : ?SObject {
+        $queryResult = $this->query($query);
+        
+        return $queryResult->size === 0
+            ? null
+            : $queryResult->current();
     }
     
     /**

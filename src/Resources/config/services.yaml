@@ -12,10 +12,4 @@ services:
     
     # developerforce/force.com-toolkit-for-php
     SforceEnterpriseClient:
-        calls:
-            - createConnection:
-                $wsdl: '../../../salesforce.wsdl.xml'
-            - login:
-                $username: '%env(SALESFORCE_USERNAME)%'
-                $password: !join ['%env(SALESFORCE_PASSWORD)%', '%env(SALESFORCE_TOKEN)%']
         class: 'SforceEnterpriseClient'
