@@ -108,6 +108,9 @@ class SalesforceApi
      * @param string $query
      *
      * @return \SObject
+     *
+     * @throws \Jalismrs\SalesforceApiBundle\ApiException
+     * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
      */
     public function queryOneOrFails(
         string $query
