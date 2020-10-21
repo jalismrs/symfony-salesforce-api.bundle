@@ -60,7 +60,7 @@ class SalesforceApi
             [
                 $parameterBag->get(self::PARAMETER_PASSWORD),
                 $parameterBag->get(self::PARAMETER_TOKEN),
-            ]
+            ],
         );
         
         $this->client->createConnection(

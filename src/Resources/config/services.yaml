@@ -1,3 +1,8 @@
+parameters:
+    'api.salesforce.password': '%env(SALESFORCE_PASSWORD)%'
+    'api.salesforce.token': '%env(SALESFORCE_TOKEN)%'
+    'api.salesforce.username': '%env(SALESFORCE_USERNAME)%'
+
 services:
     _defaults:
         public: false
