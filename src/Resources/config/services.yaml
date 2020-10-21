@@ -1,7 +1,7 @@
 parameters:
-    'salesforce.password': '%env(SALESFORCE_PASSWORD)%'
-    'salesforce.token': '%env(SALESFORCE_TOKEN)%'
-    'salesforce.username': '%env(SALESFORCE_USERNAME)%'
+    'salesforce_api.password': '%env(SALESFORCE_PASSWORD)%'
+    'salesforce_api.token': '%env(SALESFORCE_TOKEN)%'
+    'salesforce_api.username': '%env(SALESFORCE_USERNAME)%'
 
 services:
     _defaults:

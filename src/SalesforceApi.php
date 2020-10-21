@@ -18,9 +18,9 @@ use function vsprintf;
  */
 class SalesforceApi
 {
-    public const PARAMETER_USERNAME = 'salesforce.username';
-    public const PARAMETER_PASSWORD = 'salesforce.password';
-    public const PARAMETER_TOKEN    = 'salesforce.token';
+    public const PARAMETER_USERNAME = 'salesforce_api.username';
+    public const PARAMETER_PASSWORD = 'salesforce_api.password';
+    public const PARAMETER_TOKEN    = 'salesforce_api.token';
     
     private const THROTTLER_KEY = 'salesforce_api';
     
