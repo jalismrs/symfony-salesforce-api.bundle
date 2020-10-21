@@ -20,7 +20,7 @@
     "sort-packages" : true
   },
   "description" : "Salesforce API",
-  "license" : "proprietary",
+  "license" : "MIT",
   "minimum-stability": "dev",
   "name" : "jalismrs/symfony-salesforce-api.bundle",
   "require-dev" : {

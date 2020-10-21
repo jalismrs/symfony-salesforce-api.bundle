@@ -18,11 +18,11 @@ use function vsprintf;
  */
 class SalesforceApi
 {
-    public const PARAMETER_USERNAME = 'api.salesforce.username';
-    public const PARAMETER_PASSWORD = 'api.salesforce.password';
-    public const PARAMETER_TOKEN    = 'api.salesforce.token';
+    public const PARAMETER_USERNAME = 'salesforce.username';
+    public const PARAMETER_PASSWORD = 'salesforce.password';
+    public const PARAMETER_TOKEN    = 'salesforce.token';
     
-    private const THROTTLER_KEY = 'api_salesforce';
+    private const THROTTLER_KEY = 'salesforce_api';
     
     /**
      * apiThrottler
@@ -53,6 +53,10 @@ class SalesforceApi
     ) {
         $this->apiThrottler = $apiThrottler;
         $this->client       = $sforceEnterpriseClient;
+        
+        dd(
+            $this->client
+        );
         
         $this->client->createConnection(
             __DIR__ . '/../salesforce.wsdl.xml'

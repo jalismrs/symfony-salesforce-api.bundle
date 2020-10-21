@@ -1,3 +1,8 @@
+parameters:
+    'salesforce.password': '%env(SALESFORCE_PASSWORD)%'
+    'salesforce.token': '%env(SALESFORCE_TOKEN)%'
+    'salesforce.username': '%env(SALESFORCE_USERNAME)%'
+
 services:
     _defaults:
         public: false
@@ -12,4 +17,10 @@ services:
     
     # developerforce/force.com-toolkit-for-php
     SforceEnterpriseClient:
+        calls:
+            - createConnection:
+                $wsdl: '../../../salesforce.wsdl.xml'
+            - login:
+                $username: '%env(SALESFORCE_USERNAME)%'
+                $password: '%env(SALESFORCE_PASSWORD)%%env(SALESFORCE_TOKEN)%
         class: 'SforceEnterpriseClient'
