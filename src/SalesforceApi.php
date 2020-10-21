@@ -103,6 +103,26 @@ class SalesforceApi
     }
     
     /**
+     * queryOneOrFails
+     *
+     * @param string $query
+     *
+     * @return \SObject
+     */
+    public function queryOneOrFails(
+        string $query
+    ) : SObject {
+        $result = $this->queryOne($query);
+        if ($result === null) {
+            throw new ApiException(
+                'No result'
+            );
+        }
+        
+        return $result;
+    }
+    
+    /**
      * query
      *
      * @param string $query
