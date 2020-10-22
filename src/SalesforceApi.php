@@ -18,11 +18,11 @@ use function vsprintf;
  */
 class SalesforceApi
 {
-    public const PARAMETER_USERNAME = 'api.salesforce.username';
-    public const PARAMETER_PASSWORD = 'api.salesforce.password';
-    public const PARAMETER_TOKEN    = 'api.salesforce.token';
+    public const PARAMETER_USERNAME = 'salesforce_api.username';
+    public const PARAMETER_PASSWORD = 'salesforce_api.password';
+    public const PARAMETER_TOKEN    = 'salesforce_api.token';
     
-    private const THROTTLER_KEY = 'api_salesforce';
+    private const THROTTLER_KEY = 'salesforce_api';
     
     /**
      * apiThrottler
@@ -54,18 +54,21 @@ class SalesforceApi
         $this->apiThrottler = $apiThrottler;
         $this->client       = $sforceEnterpriseClient;
         
+        $username = $parameterBag->get(self::PARAMETER_USERNAME);
+        $password = vsprintf(
+            '%s%s',
+            [
+                $parameterBag->get(self::PARAMETER_PASSWORD),
+                $parameterBag->get(self::PARAMETER_TOKEN),
+            ],
+        );
+        
         $this->client->createConnection(
             __DIR__ . '/../salesforce.wsdl.xml'
         );
         $this->client->login(
-            $parameterBag->get(self::PARAMETER_USERNAME),
-            vsprintf(
-                '%s%s',
-                [
-                    $parameterBag->get(self::PARAMETER_PASSWORD),
-                    $parameterBag->get(self::PARAMETER_TOKEN),
-                ]
-            )
+            $username,
+            $password
         );
         
         $this->apiThrottler->registerRateLimits(
@@ -77,6 +80,29 @@ class SalesforceApi
                 ),
             ]
         );
+    }
+    
+    /**
+     * queryOneOrFails
+     *
+     * @param string $query
+     *
+     * @return \SObject
+     *
+     * @throws \Jalismrs\SalesforceApiBundle\SalesforceApiException
+     * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
+     */
+    public function queryOneOrFails(
+        string $query
+    ) : SObject {
+        $result = $this->queryOne($query);
+        if ($result === null) {
+            throw new SalesforceApiException(
+                'No result'
+            );
+        }
+        
+        return $result;
     }
     
     /**
@@ -92,7 +118,7 @@ class SalesforceApi
         string $query
     ) : ?SObject {
         $queryResult = $this->query($query);
-    
+        
         return $queryResult->size === 0
             ? null
             : $queryResult->current();

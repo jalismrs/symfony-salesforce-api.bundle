@@ -20,7 +20,7 @@
     "sort-packages" : true
   },
   "description" : "Salesforce API",
-  "license" : "proprietary",
+  "license" : "MIT",
   "minimum-stability": "dev",
   "name" : "jalismrs/symfony-salesforce-api.bundle",
   "require-dev" : {
@@ -33,6 +33,7 @@
     "php" : "^7.4",
     "developerforce/force.com-toolkit-for-php" : "dev-master",
     "jalismrs/symfony-api-throttler.bundle" : "^1.0.0",
+    "jalismrs/symfony-exception.bundle" : "^1.0.0",
     "symfony/config" : "^5.0",
     "symfony/http-kernel" : "^5.0",
     "symfony/dependency-injection": "^5.0"

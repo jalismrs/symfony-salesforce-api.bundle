@@ -14,7 +14,7 @@ use QueryResult;
 use SObject;
 
 class SalesforceApi extends SalesforceApiBase {
-    public function someApiCall(): QueryResult {
+    public function someApiCallQueryResult(): QueryResult {
         $query = <<<SOQL
 
 SOQL;
@@ -22,12 +22,20 @@ SOQL;
         return $this->query($query);
     }
     
-    public function someOtherApiCall(): ?SObject {
+    public function someApiCallNullableSObject(): ?SObject {
         $query = <<<SOQL
 
 SOQL;
         
         return $this->queryOne($query);
+    }
+    
+    public function someOtherApiCallSObjectOrFails(): SObject {
+        $query = <<<SOQL
+
+SOQL;
+        
+        return $this->queryOneOrFails($query);
     }
 }
 ```
