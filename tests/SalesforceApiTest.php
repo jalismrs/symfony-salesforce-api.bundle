@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Tests;
 
 use Jalismrs\ApiThrottlerBundle\ApiThrottler;
-use Jalismrs\SalesforceApiBundle\ApiException;
+use Jalismrs\SalesforceApiBundle\SalesforceApiException;
 use Jalismrs\SalesforceApiBundle\SalesforceApi;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +35,7 @@ final class SalesforceApiTest extends
      * @var \PHPUnit\Framework\MockObject\MockObject|\SforceEnterpriseClient
      */
     private MockObject $mockSforceEnterpriseClient;
-    
+
     /**
      * testQuery
      *
@@ -51,10 +51,10 @@ final class SalesforceApiTest extends
     {
         // arrange
         $systemUnderTest = $this->createSUT();
-        
+
         $query           = 'test';
         $mockQueryResult = $this->createMock(QueryResult::class);
-        
+
         // expect
         $this->mockSforceEnterpriseClient
             ->expects(self::once())
@@ -66,17 +66,17 @@ final class SalesforceApiTest extends
         $this->mockApiThrottler
             ->expects(self::atLeastOnce())
             ->method('waitAndIncrease');
-        
+
         // act
         $output = $systemUnderTest->query($query);
-        
+
         // assert
         self::assertSame(
             $mockQueryResult,
             $output
         );
     }
-    
+
     /**
      * createSUT
      *
@@ -100,16 +100,16 @@ final class SalesforceApiTest extends
         $this->mockApiThrottler
             ->expects(self::once())
             ->method('registerRateLimits');
-        
+
         $testParameterBag = new ParameterBag(SalesforceApiProvider::PARAMETERS);
-        
+
         return new SalesforceApi(
             $this->mockApiThrottler,
             $testParameterBag,
             $this->mockSforceEnterpriseClient
         );
     }
-    
+
     /**
      * testQueryOne
      *
@@ -130,19 +130,19 @@ final class SalesforceApiTest extends
     ) : void {
         // arrange
         $systemUnderTest = $this->createSUT();
-        
+
         $query           = 'test';
         $mockQueryResult = $this->createMock(QueryResult::class);
-        
+
         if ($providedOutput) {
             $mockQueryResult->size = 1;
-            
+
             $expectedOutput = new SObject(
                 (object)[
                     'Id' => 'id',
                 ],
             );
-            
+
             // expect
             $mockQueryResult
                 ->expects(self::once())
@@ -150,15 +150,15 @@ final class SalesforceApiTest extends
                 ->willReturn($expectedOutput);
         } else {
             $mockQueryResult->size = 0;
-            
+
             $expectedOutput = null;
-            
+
             // expect
             $mockQueryResult
                 ->expects(self::never())
                 ->method('current');
         }
-        
+
         // expect
         $this->mockSforceEnterpriseClient
             ->expects(self::once())
@@ -170,23 +170,23 @@ final class SalesforceApiTest extends
         $this->mockApiThrottler
             ->expects(self::atLeastOnce())
             ->method('waitAndIncrease');
-        
+
         // act
         $output = $systemUnderTest->queryOne($query);
-        
+
         // assert
         self::assertEquals(
             $expectedOutput,
             $output
         );
     }
-    
+
     /**
      * testQueryOneOrFails
      *
      * @return void
      *
-     * @throws \Jalismrs\SalesforceApiBundle\ApiException
+     * @throws \Jalismrs\SalesforceApiBundle\SalesforceApiException
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \PHPUnit\Framework\MockObject\RuntimeException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
@@ -197,18 +197,18 @@ final class SalesforceApiTest extends
     {
         // arrange
         $systemUnderTest = $this->createSUT();
-        
+
         $query           = 'test';
         $mockQueryResult = $this->createMock(QueryResult::class);
-        
+
         $mockQueryResult->size = 1;
-        
+
         $expectedOutput = new SObject(
             (object)[
                 'Id' => 'id',
             ],
         );
-        
+
         // expect
         $mockQueryResult
             ->expects(self::once())
@@ -224,23 +224,23 @@ final class SalesforceApiTest extends
         $this->mockApiThrottler
             ->expects(self::atLeastOnce())
             ->method('waitAndIncrease');
-        
+
         // act
         $output = $systemUnderTest->queryOneOrFails($query);
-        
+
         // assert
         self::assertEquals(
             $expectedOutput,
             $output
         );
     }
-    
+
     /**
      * testQueryOneOrFailsThrowsApiException
      *
      * @return void
      *
-     * @throws \Jalismrs\SalesforceApiBundle\ApiException
+     * @throws \Jalismrs\SalesforceApiBundle\SalesforceApiException
      * @throws \PHPUnit\Framework\MockObject\RuntimeException
      * @throws \Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException
      * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
@@ -248,14 +248,14 @@ final class SalesforceApiTest extends
     public function testQueryOneOrFailsThrowsApiException() : void {
         // arrange
         $systemUnderTest = $this->createSUT();
-        
+
         $query           = 'test';
         $mockQueryResult = $this->createMock(QueryResult::class);
-        
+
         $mockQueryResult->size = 0;
-        
+
         // expect
-        $this->expectException(ApiException::class);
+        $this->expectException(SalesforceApiException::class);
         $this->expectExceptionMessage('No result');
         $mockQueryResult
             ->expects(self::never())
@@ -270,11 +270,11 @@ final class SalesforceApiTest extends
         $this->mockApiThrottler
             ->expects(self::atLeastOnce())
             ->method('waitAndIncrease');
-        
+
         // act
         $systemUnderTest->queryOneOrFails($query);
     }
-    
+
     /**
      * setUp
      *
@@ -283,7 +283,7 @@ final class SalesforceApiTest extends
     protected function setUp() : void
     {
         parent::setUp();
-        
+
         $this->mockApiThrottler           = $this->createMock(ApiThrottler::class);
         $this->mockSforceEnterpriseClient = $this->createMock(SforceEnterpriseClient::class);
     }

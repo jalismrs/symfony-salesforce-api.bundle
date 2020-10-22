@@ -89,7 +89,7 @@ class SalesforceApi
      *
      * @return \SObject
      *
-     * @throws \Jalismrs\SalesforceApiBundle\ApiException
+     * @throws \Jalismrs\SalesforceApiBundle\SalesforceApiException
      * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
      */
     public function queryOneOrFails(
@@ -97,7 +97,7 @@ class SalesforceApi
     ) : SObject {
         $result = $this->queryOne($query);
         if ($result === null) {
-            throw new ApiException(
+            throw new SalesforceApiException(
                 'No result'
             );
         }
