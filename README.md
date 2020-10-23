@@ -1,8 +1,10 @@
 # Symfony Bundle Salesforce API
 
+this bundle helps you use Salesforce API using SOQL requests
+
 ## Test
 
-`phpunit` OU `vendor/bin/phpunit`
+`phpunit` or `vendor/bin/phpunit`
 
 coverage reports will be available in `var/coverage`
 

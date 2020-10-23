@@ -19,7 +19,7 @@
   "config" : {
     "sort-packages" : true
   },
-  "description" : "Salesforce API",
+  "description" : "Symfony Bundle - Salesforce API",
   "license" : "MIT",
   "minimum-stability": "dev",
   "name" : "jalismrs/symfony-salesforce-api.bundle",
