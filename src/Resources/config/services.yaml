@@ -5,7 +5,8 @@ parameters:
 
 services:
     _defaults:
-        public: false
+        autowire: true
+        autoconfigure: true
     
     salesforce_api.salesforce_api:
         class: 'Jalismrs\SalesforceApiBundle\SalesforceApi'
