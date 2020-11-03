@@ -1,6 +1,6 @@
-# Symfony Bundle Salesforce API
+# symfony.bundle.api.salesforce
 
-this bundle helps you use Salesforce API using SOQL requests
+Adds a service to query Salesforce API
 
 ## Test
 
@@ -11,7 +11,7 @@ coverage reports will be available in `var/coverage`
 ## Use
 
 ```php
-use Jalismrs\SalesforceApiBundle\SalesforceApi as SalesforceApiBase;
+use Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi as SalesforceApiBase;
 use QueryResult;
 use SObject;
 

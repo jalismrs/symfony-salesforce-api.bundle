@@ -8,13 +8,16 @@ services:
         autowire: true
         autoconfigure: true
     
-    salesforce_api.salesforce_api:
-        class: 'Jalismrs\SalesforceApiBundle\SalesforceApi'
+    jalismrs_salesforce_api.salesforce_api:
+        class: 'Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi'
         arguments:
-            $apiThrottler: '@Jalismrs\ApiThrottlerBundle\ApiThrottler'
+            $apiThrottler: '@Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler'
             $sforceEnterpriseClient: '@SforceEnterpriseClient'
+            $username: '%jalismrs_salesforce_api.username%'
+            $password: '%@jalismrs_salesforce_api.password%'
+            $token: '%@jalismrs_salesforce_api.token%'
     
-    Jalismrs\SalesforceApiBundle\SalesforceApi: '@salesforce_api.salesforce_api'
+    Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi: '@jalismrs_salesforce_api.salesforce_api'
     
     # developerforce/force.com-toolkit-for-php
     SforceEnterpriseClient:

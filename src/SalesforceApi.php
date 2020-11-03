@@ -1,33 +1,27 @@
 <?php
 declare(strict_types = 1);
 
-namespace Jalismrs\SalesforceApiBundle;
+namespace Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle;
 
-use Jalismrs\ApiThrottlerBundle\ApiThrottler;
+use Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler;
 use Maba\GentleForce\RateLimit\UsageRateLimit;
 use QueryResult;
 use SforceEnterpriseClient;
 use SObject;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use function vsprintf;
 
 /**
- * Class SalesforceClient
+ * Class SalesforceApi
  *
- * @package App\Service\Api
+ * @package Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle
  */
 class SalesforceApi
 {
-    public const PARAMETER_USERNAME = 'salesforce_api.username';
-    public const PARAMETER_PASSWORD = 'salesforce_api.password';
-    public const PARAMETER_TOKEN    = 'salesforce_api.token';
-    
     private const THROTTLER_KEY = 'salesforce_api';
     
     /**
      * apiThrottler
      *
-     * @var \Jalismrs\ApiThrottlerBundle\ApiThrottler
+     * @var \Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler
      */
     private ApiThrottler $apiThrottler;
     /**
@@ -40,35 +34,28 @@ class SalesforceApi
     /**
      * SalesforceApi constructor.
      *
-     * @param \Jalismrs\ApiThrottlerBundle\ApiThrottler                                 $apiThrottler
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
-     * @param \SforceEnterpriseClient                                                   $sforceEnterpriseClient
-     *
-     * @throws \Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException
+     * @param \Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler $apiThrottler
+     * @param \SforceEnterpriseClient                                          $sforceEnterpriseClient
+     * @param string                                                           $username
+     * @param string                                                           $password
+     * @param string                                                           $token
      */
     public function __construct(
         ApiThrottler $apiThrottler,
-        ParameterBagInterface $parameterBag,
-        SforceEnterpriseClient $sforceEnterpriseClient
+        SforceEnterpriseClient $sforceEnterpriseClient,
+        string $username,
+        string $password,
+        string $token
     ) {
         $this->apiThrottler = $apiThrottler;
         $this->client       = $sforceEnterpriseClient;
-        
-        $username = $parameterBag->get(self::PARAMETER_USERNAME);
-        $password = vsprintf(
-            '%s%s',
-            [
-                $parameterBag->get(self::PARAMETER_PASSWORD),
-                $parameterBag->get(self::PARAMETER_TOKEN),
-            ],
-        );
         
         $this->client->createConnection(
             __DIR__ . '/../salesforce.wsdl.xml'
         );
         $this->client->login(
             $username,
-            $password
+            "{$password}{$token}"
         );
         
         $this->apiThrottler->registerRateLimits(
@@ -89,7 +76,7 @@ class SalesforceApi
      *
      * @return \SObject
      *
-     * @throws \Jalismrs\SalesforceApiBundle\SalesforceApiException
+     * @throws \Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApiException
      * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
      */
     public function queryOneOrFails(
