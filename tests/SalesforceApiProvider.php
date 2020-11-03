@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Tests;
 
-use Jalismrs\SalesforceApiBundle\SalesforceApi;
+use Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi;
 
 /**
  * Class SalesforceApiProvider
@@ -15,11 +15,7 @@ final class SalesforceApiProvider
     public const PARAMETER_USERNAME = 'apiSalesforceUsername';
     public const PARAMETER_PASSWORD = 'apiSalesforcePassword';
     public const PARAMETER_TOKEN    = 'apiSalesforceToken';
-    public const PARAMETERS         = [
-        SalesforceApi::PARAMETER_USERNAME => self::PARAMETER_USERNAME,
-        SalesforceApi::PARAMETER_PASSWORD => self::PARAMETER_PASSWORD,
-        SalesforceApi::PARAMETER_TOKEN    => self::PARAMETER_TOKEN,
-    ];
+
     
     /**
      * provideQueryOne

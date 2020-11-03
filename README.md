@@ -1,15 +1,17 @@
-# Symfony Bundle Salesforce API
+# symfony.bundle.api.salesforce
+
+Adds a service to query Salesforce API
 
 ## Test
 
-`phpunit` OU `vendor/bin/phpunit`
+`phpunit` or `vendor/bin/phpunit`
 
 coverage reports will be available in `var/coverage`
 
 ## Use
 
 ```php
-use Jalismrs\SalesforceApiBundle\SalesforceApi as SalesforceApiBase;
+use Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi as SalesforceApiBase;
 use QueryResult;
 use SObject;
 
