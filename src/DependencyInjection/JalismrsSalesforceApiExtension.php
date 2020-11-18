@@ -49,7 +49,7 @@ class JalismrsSalesforceApiExtension extends
         $definition->addMethodCall(
             'createConnection',
             [
-                '$wsdl' => __DIR__ . '../../salesforce.wsdl.xml',
+                '$wsdl' => __DIR__ . '/../../salesforce.wsdl.xml',
             ]
         );
         $definition->addMethodCall(
