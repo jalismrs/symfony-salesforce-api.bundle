@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\DependencyInjection;
 
-use Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler;
 use Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi;
 use Maba\GentleForce\RateLimit\UsageRateLimit;
 use Symfony\Component\Config\FileLocator;
@@ -43,8 +42,10 @@ class JalismrsSalesforceApiExtension extends
         );
         
         $yamlFileLoader->load('services.yaml');
-    
-        $definition = $container->getDefinition(Configuration::CONFIG_ROOT . '.dependency.developerforce.force_com_toolkit_for_php.sforce_enterprise_client');
+        
+        $definition = $container->getDefinition(
+            Configuration::CONFIG_ROOT . '.dependency.developerforce.force_com_toolkit_for_php.sforce_enterprise_client'
+        );
         $definition->addMethodCall(
             'createConnection',
             [
@@ -58,8 +59,10 @@ class JalismrsSalesforceApiExtension extends
                 '$password' => $mergedConfig['password'] . $mergedConfig['token'],
             ]
         );
-    
-        $definition = $container->getDefinition(ApiThrottler::class);
+        
+        $definition = $container->getDefinition(
+            Configuration::CONFIG_ROOT . '.dependency.jalismrs.symfony_bundle_api_throttler.api_throttler'
+        );
         $definition->addMethodCall(
             'registerRateLimits',
             [

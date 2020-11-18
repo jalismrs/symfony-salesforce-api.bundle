@@ -9,7 +9,7 @@ services:
     # services
     jalismrs_salesforce_api.salesforce_api:
         arguments:
-            $apiThrottler: '@Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler'
+            $apiThrottler: '@jalismrs_salesforce_api.dependency.jalismrs.symfony_bundle_api_throttler.api_throttler'
             $sforceEnterpriseClient: '@jalismrs_salesforce_api.dependency.developerforce.force_com_toolkit_for_php.sforce_enterprise_client'
         class: 'Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi'
     
@@ -17,3 +17,7 @@ services:
     # developerforce/force.com-toolkit-for-php
     jalismrs_salesforce_api.dependency.developerforce.force_com_toolkit_for_php.sforce_enterprise_client:
         class: 'SforceEnterpriseClient'
+
+    # jalismrs/symfony.bundle.api-throttler
+    jalismrs_salesforce_api.dependency.jalismrs.symfony_bundle_api_throttler.api_throttler:
+        class: 'Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler'
