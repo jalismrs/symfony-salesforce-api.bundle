@@ -43,6 +43,16 @@ class SalesforceApi
     ) {
         $this->apiThrottler = $apiThrottler;
         $this->client       = $sforceEnterpriseClient;
+        
+        $this->apiThrottler->registerRateLimits(
+            self::THROTTLER_KEY,
+            [
+                new UsageRateLimit(
+                    100000,
+                    60 * 60 * 24,
+                ),
+            ]
+        );
     }
     
     /**
