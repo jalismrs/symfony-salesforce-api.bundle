@@ -41,3 +41,14 @@ SOQL;
     }
 }
 ```
+
+## Configuration
+
+```yaml
+# config/packages/jalismrs_salesforce_api.yaml
+
+jalismrs_salesforce_api:
+    password: 'salesforce_password'
+    token: 'salesforce_token'
+    username: 'salesforce_username'
+```

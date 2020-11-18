@@ -1,13 +1,12 @@
-parameters:
-    'salesforce_api.password': '%env(SALESFORCE_PASSWORD)%'
-    'salesforce_api.token': '%env(SALESFORCE_TOKEN)%'
-    'salesforce_api.username': '%env(SALESFORCE_USERNAME)%'
-
 services:
     _defaults:
         autowire: true
         autoconfigure: true
     
+    # aliases
+    Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi: '@jalismrs_salesforce_api.salesforce_api'
+
+    # services
     jalismrs_salesforce_api.salesforce_api:
         class: 'Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi'
         arguments:
@@ -17,8 +16,7 @@ services:
             $password: '%@jalismrs_salesforce_api.password%'
             $token: '%@jalismrs_salesforce_api.token%'
     
-    Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi: '@jalismrs_salesforce_api.salesforce_api'
-    
+    # DEPENDENCIES -------------------------------------------------------------
     # developerforce/force.com-toolkit-for-php
     SforceEnterpriseClient:
         class: 'SforceEnterpriseClient'
