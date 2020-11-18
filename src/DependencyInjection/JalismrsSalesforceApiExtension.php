@@ -59,21 +59,5 @@ class JalismrsSalesforceApiExtension extends
                 '$password' => $mergedConfig['password'] . $mergedConfig['token'],
             ]
         );
-        
-        $definition = $container->getDefinition(
-            Configuration::CONFIG_ROOT . '.dependency.jalismrs.symfony_bundle_api_throttler.api_throttler'
-        );
-        $definition->addMethodCall(
-            'registerRateLimits',
-            [
-                '$useCaseKey' => SalesforceApi::THROTTLER_KEY,
-                '$rateLimits' => [
-                    new UsageRateLimit(
-                        100000,
-                        60 * 60 * 24
-                    ),
-                ],
-            ]
-        );
     }
 }

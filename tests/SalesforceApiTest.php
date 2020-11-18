@@ -43,7 +43,6 @@ final class SalesforceApiTest extends
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \PHPUnit\Framework\MockObject\RuntimeException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException
      * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
      */
     public function testQuery() : void
@@ -80,32 +79,12 @@ final class SalesforceApiTest extends
      * createSUT
      *
      * @return \Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi
-     *
-     * @throws \PHPUnit\Framework\MockObject\RuntimeException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException
      */
     private function createSUT() : SalesforceApi
     {
-        $this->mockSforceEnterpriseClient
-            ->expects(self::once())
-            ->method('createConnection');
-        $this->mockSforceEnterpriseClient
-            ->expects(self::once())
-            ->method('login')
-            ->with(
-                self::equalTo(SalesforceApiProvider::PARAMETER_USERNAME),
-                self::equalTo(SalesforceApiProvider::PARAMETER_PASSWORD . SalesforceApiProvider::PARAMETER_TOKEN)
-            );
-        $this->mockApiThrottler
-            ->expects(self::once())
-            ->method('registerRateLimits');
-        
         return new SalesforceApi(
             $this->mockApiThrottler,
             $this->mockSforceEnterpriseClient,
-            SalesforceApiProvider::PARAMETER_USERNAME,
-            SalesforceApiProvider::PARAMETER_PASSWORD,
-            SalesforceApiProvider::PARAMETER_TOKEN,
         );
     }
     
@@ -119,7 +98,6 @@ final class SalesforceApiTest extends
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \PHPUnit\Framework\MockObject\RuntimeException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException
      * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
      *
      * @dataProvider \Tests\SalesforceApiProvider::provideQueryOne
@@ -189,7 +167,6 @@ final class SalesforceApiTest extends
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \PHPUnit\Framework\MockObject\RuntimeException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException
      * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
      */
     public function testQueryOneOrFails() : void
@@ -241,7 +218,6 @@ final class SalesforceApiTest extends
      *
      * @throws \Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApiException
      * @throws \PHPUnit\Framework\MockObject\RuntimeException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException
      * @throws \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException
      */
     public function testQueryOneOrFailsThrowsApiException() : void
