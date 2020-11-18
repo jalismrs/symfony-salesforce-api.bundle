@@ -16,7 +16,7 @@ use SObject;
  */
 class SalesforceApi
 {
-    private const THROTTLER_KEY = 'salesforce_api';
+    public const THROTTLER_KEY = 'salesforce_api';
     
     /**
      * apiThrottler
@@ -36,34 +36,20 @@ class SalesforceApi
      *
      * @param \Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler $apiThrottler
      * @param \SforceEnterpriseClient                                          $sforceEnterpriseClient
-     * @param string                                                           $username
-     * @param string                                                           $password
-     * @param string                                                           $token
      */
     public function __construct(
         ApiThrottler $apiThrottler,
-        SforceEnterpriseClient $sforceEnterpriseClient,
-        string $username,
-        string $password,
-        string $token
+        SforceEnterpriseClient $sforceEnterpriseClient
     ) {
         $this->apiThrottler = $apiThrottler;
         $this->client       = $sforceEnterpriseClient;
-        
-        $this->client->createConnection(
-            __DIR__ . '/../salesforce.wsdl.xml'
-        );
-        $this->client->login(
-            $username,
-            "{$password}{$token}"
-        );
         
         $this->apiThrottler->registerRateLimits(
             self::THROTTLER_KEY,
             [
                 new UsageRateLimit(
                     100000,
-                    60 * 60 * 24
+                    60 * 60 * 24,
                 ),
             ]
         );

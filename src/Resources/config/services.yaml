@@ -1,24 +1,19 @@
-parameters:
-    'salesforce_api.password': '%env(SALESFORCE_PASSWORD)%'
-    'salesforce_api.token': '%env(SALESFORCE_TOKEN)%'
-    'salesforce_api.username': '%env(SALESFORCE_USERNAME)%'
-
 services:
     _defaults:
         autowire: true
         autoconfigure: true
     
-    jalismrs_salesforce_api.salesforce_api:
-        class: 'Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi'
-        arguments:
-            $apiThrottler: '@Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler'
-            $sforceEnterpriseClient: '@SforceEnterpriseClient'
-            $username: '%jalismrs_salesforce_api.username%'
-            $password: '%@jalismrs_salesforce_api.password%'
-            $token: '%@jalismrs_salesforce_api.token%'
-    
+    # aliases
     Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi: '@jalismrs_salesforce_api.salesforce_api'
     
+    # services
+    jalismrs_salesforce_api.salesforce_api:
+        arguments:
+            $apiThrottler: '@Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler'
+            $sforceEnterpriseClient: '@jalismrs_salesforce_api.dependency.developerforce.force_com_toolkit_for_php.sforce_enterprise_client'
+        class: 'Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi'
+    
+    # DEPENDENCIES -------------------------------------------------------------
     # developerforce/force.com-toolkit-for-php
-    SforceEnterpriseClient:
+    jalismrs_salesforce_api.dependency.developerforce.force_com_toolkit_for_php.sforce_enterprise_client:
         class: 'SforceEnterpriseClient'
