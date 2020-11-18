@@ -8,15 +8,12 @@ services:
 
     # services
     jalismrs_salesforce_api.salesforce_api:
-        class: 'Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi'
         arguments:
             $apiThrottler: '@Jalismrs\Symfony\Bundle\JalismrsApiThrottlerBundle\ApiThrottler'
-            $sforceEnterpriseClient: '@SforceEnterpriseClient'
-            $username: '%jalismrs_salesforce_api.username%'
-            $password: '%@jalismrs_salesforce_api.password%'
-            $token: '%@jalismrs_salesforce_api.token%'
+            $sforceEnterpriseClient: '@jalismrs_salesforce_api.dependency.developerforce.force_com_toolkit_for_php.sforce_enterprise_client'
+        class: 'Jalismrs\Symfony\Bundle\JalismrsSalesforceApiBundle\SalesforceApi'
     
     # DEPENDENCIES -------------------------------------------------------------
     # developerforce/force.com-toolkit-for-php
-    SforceEnterpriseClient:
+    jalismrs_salesforce_api.dependency.developerforce.force_com_toolkit_for_php.sforce_enterprise_client:
         class: 'SforceEnterpriseClient'
