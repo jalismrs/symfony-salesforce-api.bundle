@@ -29,7 +29,7 @@
     "roave/security-advisories" : "dev-master"
   },
   "require" : {
-    "php" : "^7.4",
+    "php" : "^7.4 || ^8.0",
     "developerforce/force.com-toolkit-for-php" : "dev-master",
     "jalismrs/symfony.bundle.api-throttler" : "^1.0.0",
     "jalismrs/common.exception" : "^1.0.0",
