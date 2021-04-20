@@ -31,7 +31,7 @@
   "require" : {
     "php" : "^7.4 || ^8.0",
     "developerforce/force.com-toolkit-for-php" : "dev-master",
-    "jalismrs/symfony.bundle.api-throttler" : "^1.0.0",
+    "jalismrs/symfony.bundle.api-throttler" : "^1.0.7",
     "jalismrs/common.exception" : "^1.0.0",
     "symfony/config" : "^5.0",
     "symfony/http-kernel" : "^5.0",
